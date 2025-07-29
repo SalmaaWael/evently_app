@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 import '../../features/authentication/login/login_screen.dart';
 import '../../features/authentication/register/register_screen.dart';
