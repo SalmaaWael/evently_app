@@ -22,7 +22,7 @@ class RegisterScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
