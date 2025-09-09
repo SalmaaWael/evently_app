@@ -33,11 +33,9 @@ class _CustomPasswordFormFieldState extends State<CustomPasswordFormField> {
       child: TextFormField(
         keyboardType: widget.keyboardType,
         obscureText: _obscureText,
-        style: GoogleFonts.inter(
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w500,
-          color: Colors.black,
-        ),
+        style: Theme.of(context).textTheme.displayMedium,
+
+
         decoration: InputDecoration(
           isDense: true,
           labelText: widget.label,
