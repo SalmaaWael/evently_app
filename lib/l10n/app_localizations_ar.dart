@@ -21,6 +21,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get login => 'تسجيل الدخول';
 
   @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
   String get dont_have_an_account => 'ليس لديك حساب؟';
 
   @override
@@ -94,9 +97,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get theme => 'السمة';
-
-  @override
-  String get logout => 'تسجيل الخروج';
 
   @override
   String get light => 'فاتح';

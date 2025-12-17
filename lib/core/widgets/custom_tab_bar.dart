@@ -1,33 +1,33 @@
-
 import 'package:evently_app/models/category_model.dart';
 import 'package:flutter/material.dart';
-
-
 import '../colors_manager.dart';
 import 'category_item.dart';
 
 class CustomTabBar extends StatefulWidget {
-  const CustomTabBar({super.key,
-  required this.categories,
+  const CustomTabBar({
+    super.key,
+    required this.categories,
     required this.selectedBackgroundColor,
     required this.unselectedBackgroundColor,
     required this.selectedForegroundColor,
     required this.unselectedForegroundColor,
-
+    required this.onTabChanged, // <--- 1. ضفنا دي
   });
- final List<CategoryModel> categories;
+
+  final List<CategoryModel> categories;
   final Color selectedBackgroundColor;
   final Color unselectedBackgroundColor;
   final Color selectedForegroundColor;
   final Color unselectedForegroundColor;
-
+  final Function(int) onTabChanged; // <--- 2. وعرفناها هنا
 
   @override
   State<CustomTabBar> createState() => _CustomTabBarState();
 }
 
 class _CustomTabBarState extends State<CustomTabBar> {
-  int isSelectedIndexTab=0;
+  int isSelectedIndexTab = 0;
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -35,25 +35,23 @@ class _CustomTabBarState extends State<CustomTabBar> {
       child: TabBar(
         tabAlignment: TabAlignment.start,
         indicatorColor: Colors.transparent,
-        onTap: (index){
+        onTap: (index) {
           setState(() {
-            isSelectedIndexTab=index;
+            isSelectedIndexTab = index;
+            widget.onTabChanged(index); // <--- 3. بنبلغ الصفحة الرئيسية بالاختيار
           });
         },
         isScrollable: true,
-        tabs: widget.categories.map(
-                (category) {
-              print(widget.categories.indexOf(category));
-              return CategoryItem(
-                category: category,
-                selectedBackgroundColor:widget.selectedBackgroundColor ,
-                unselectedBackgroundColor: widget.unselectedBackgroundColor ,
-                selectedForegroundColor: widget.selectedForegroundColor ,
-                unselectedForegroundColor: widget.unselectedForegroundColor ,
-                isSelected: isSelectedIndexTab==widget.categories.indexOf(category),
-              );
-            }
-        ).toList(),
+        tabs: widget.categories.map((category) {
+          return CategoryItem(
+            category: category,
+            selectedBackgroundColor: widget.selectedBackgroundColor,
+            unselectedBackgroundColor: widget.unselectedBackgroundColor,
+            selectedForegroundColor: widget.selectedForegroundColor,
+            unselectedForegroundColor: widget.unselectedForegroundColor,
+            isSelected: isSelectedIndexTab == widget.categories.indexOf(category),
+          );
+        }).toList(),
       ),
     );
   }

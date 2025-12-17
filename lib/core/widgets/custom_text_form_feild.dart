@@ -1,48 +1,58 @@
-import 'package:evently_app/core/colors_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
+import '../colors_manager.dart';
 
 class CustomTextFormFeild extends StatelessWidget {
-  const CustomTextFormFeild({super.key,
-    this.prefixIcon,this.prefixIconColor= ColorsManager.grey,
-    this. suffixIcon, this.label,
-    this.keyboardType=TextInputType.text,
-    this.obscureText, this.hint,
-    this.maxLines=1, this.hintstyle ,
-  });
-  final IconData? prefixIcon;
-  final Color prefixIconColor;
-  final IconData? suffixIcon;
   final String? label;
-  final bool? obscureText;
-  final TextInputType? keyboardType;
   final String? hint;
-   final int maxLines;
+  final IconData? prefixIcon;
+  final TextInputType keyboardType;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final int maxLines;
 
-  final dynamic hintstyle;
+  const CustomTextFormFeild({
+    super.key,
+    this.label,
+    this.hint,
+    this.prefixIcon,
+    this.keyboardType = TextInputType.text,
+    this.controller,
+    this.validator,
+    this.maxLines = 1,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: TextFormField(
+    return TextFormField(
+      controller: controller,
+      validator: validator,
+      keyboardType: keyboardType,
+      maxLines: maxLines,
+      // 👇 1. لون الكتابة أسود صريح
+      style: const TextStyle(color: Colors.black),
 
-      maxLines: maxLines ,
-       style: Theme.of(context).textTheme.displayMedium,
-        keyboardType: keyboardType,
-          obscureText: obscureText ?? false,
-          decoration: InputDecoration(
-            isDense: true,
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: hint,
 
-          hintText: hint,
+        // 👇 2. لون الليبل والهنت رصاصي غامق صريح
+        labelStyle: const TextStyle(color: Colors.grey),
+        hintStyle: const TextStyle(color: Colors.grey),
 
-            prefixIcon: prefixIcon != null ?Icon(prefixIcon):null,
-            suffixIcon: suffixIcon != null ?Icon(suffixIcon):null,
+        prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: Colors.grey) : null,
 
-            labelText: label,
-
-              )
-
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: ColorsManager.blue, width: 2),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: ColorsManager.blue, width: 2),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: ColorsManager.blue, width: 2),
+        ),
       ),
     );
   }

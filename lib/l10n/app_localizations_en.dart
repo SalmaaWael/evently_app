@@ -21,6 +21,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login => 'Login';
 
   @override
+  String get logout => 'Logout';
+
+  @override
   String get dont_have_an_account => 'Don\'t have an account?';
 
   @override
@@ -94,9 +97,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get theme => 'Theme';
-
-  @override
-  String get logout => 'Logout';
 
   @override
   String get light => 'Light';

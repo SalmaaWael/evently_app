@@ -17,7 +17,7 @@ class LayoutScreen extends StatefulWidget {
 
 class _LayoutScreenState extends State<LayoutScreen> {
   List<Widget> _tabs=[
-    Home(),
+    HomeTab(),
     Maps(),
     Favorite(),
     Profile(),

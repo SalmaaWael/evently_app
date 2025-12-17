@@ -1,55 +1,67 @@
-import 'package:evently_app/core/colors_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
+import '../colors_manager.dart';
 
 class CustomPasswordFormField extends StatefulWidget {
+  final String label;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final TextInputType keyboardType;
+
   const CustomPasswordFormField({
     super.key,
     required this.label,
+    this.controller,
+    this.validator,
     this.keyboardType = TextInputType.visiblePassword,
   });
-
-  final String label;
-  final TextInputType keyboardType;
 
   @override
   State<CustomPasswordFormField> createState() => _CustomPasswordFormFieldState();
 }
 
 class _CustomPasswordFormFieldState extends State<CustomPasswordFormField> {
-  bool _obscureText = true;
-
-  void _togglePasswordVisibility() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
+  bool isObscure = true;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: TextFormField(
-        keyboardType: widget.keyboardType,
-        obscureText: _obscureText,
-        style: Theme.of(context).textTheme.displayMedium,
+    return TextFormField(
+      controller: widget.controller,
+      validator: widget.validator,
+      obscureText: isObscure,
+      keyboardType: widget.keyboardType,
 
+      // 👇 1. الكتابة أسود
+      style: const TextStyle(color: Colors.black),
 
-        decoration: InputDecoration(
-          isDense: true,
-          labelText: widget.label,
-          prefixIcon: const Icon(Icons.lock),
-          prefixIconColor: ColorsManager.grey,
-          suffixIconColor: ColorsManager.grey,
-          suffixIcon: IconButton(
-            icon: Icon(
-              _obscureText ? Icons.visibility_off : Icons.visibility,
-            ),
+      decoration: InputDecoration(
+        labelText: widget.label,
 
+        // 👇 2. الليبل رصاصي
+        labelStyle: const TextStyle(color: Colors.grey),
 
-            onPressed: _togglePasswordVisibility,
+        prefixIcon: const Icon(Icons.lock_outline, color: Colors.grey),
+        suffixIcon: IconButton(
+          onPressed: () {
+            setState(() {
+              isObscure = !isObscure;
+            });
+          },
+          icon: Icon(
+            isObscure ? Icons.visibility_off : Icons.visibility,
+            color: Colors.grey,
           ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: ColorsManager.blue, width: 2),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: ColorsManager.blue, width: 2),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: ColorsManager.blue, width: 2),
         ),
       ),
     );
