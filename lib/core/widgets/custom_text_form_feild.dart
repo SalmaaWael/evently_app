@@ -28,16 +28,15 @@ class CustomTextFormFeild extends StatelessWidget {
       validator: validator,
       keyboardType: keyboardType,
       maxLines: maxLines,
-      // 👇 1. لون الكتابة أسود صريح
-      style: const TextStyle(color: Colors.black),
+
+      style: Theme.of(context).textTheme.bodyMedium,
 
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
 
-        // 👇 2. لون الليبل والهنت رصاصي غامق صريح
-        labelStyle: const TextStyle(color: Colors.grey),
-        hintStyle: const TextStyle(color: Colors.grey),
+        labelStyle: Theme.of(context).inputDecorationTheme.labelStyle,
+        hintStyle: Theme.of(context).inputDecorationTheme.hintStyle,
 
         prefixIcon: prefixIcon != null ? Icon(prefixIcon, color: Colors.grey) : null,
 

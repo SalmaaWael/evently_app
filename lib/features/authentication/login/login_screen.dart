@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../../core/assets_manager/assests_manager.dart';
-import '../../../core/colors_manager.dart'; // تأكدي من المسار
+import '../../../core/colors_manager.dart';
 import '../../../core/routes_manager/routes_manager.dart';
 import '../../../core/widgets/custom_elevated_button.dart';
 import '../../../core/widgets/custom_password_feild.dart';
@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return SafeArea(
       child: Scaffold(
-        // backgroundColor: Colors.white, // لو عايزة تتأكدي إن الخلفية بيضاء
+
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
           child: SingleChildScrollView(
@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     validator: (value) => (value == null || value.trim().isEmpty) ? 'Required' : null,
                   ),
 
-                  // 👇 زرار Forget Password (خليناه TextButton عادي عشان نتحكم في لونه)
+                  // زرار Forget Password
                   Container(
                       alignment: Alignment.centerRight,
                       child: TextButton(
@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(
                           AppLocalizations.of(context)!.forget_password,
                           style: TextStyle(
-                              color: ColorsManager.blue, // 🔵 لون أزرق صريح
+                              color: ColorsManager.blue,
                               fontWeight: FontWeight.bold,
                               decoration: TextDecoration.underline,
                               fontStyle: FontStyle.italic
@@ -82,10 +82,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+
                       Text(
                         AppLocalizations.of(context)!.dont_have_an_account,
-                        // ⚫ لون أسود صريح للكلام الثابت
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.black),
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       TextButton(
                         onPressed: () {
@@ -93,7 +93,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         child: Text(
                           AppLocalizations.of(context)!.create_account,
-                          // 🔵 لون أزرق صريح للزرار
                           style: TextStyle(
                               color: ColorsManager.blue,
                               fontWeight: FontWeight.bold,
@@ -107,18 +106,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   SizedBox(height: 16.h),
 
-                  // 👇 فاصل (Or) - خلينا لونه أزرق
+
                   Row(
                     children: [
                       Expanded(child: Divider(color: ColorsManager.blue, thickness: 1, endIndent: 10)),
-                      Text("Or", style: TextStyle(color: Colors.black)), // ⚫ أسود
+                      Text(
+                          "Or",
+                          style: Theme.of(context).textTheme.bodyMedium
+                      ),
                       Expanded(child: Divider(color: ColorsManager.blue, thickness: 1, indent: 10)),
                     ],
                   ),
 
                   SizedBox(height: 16.h),
 
-                  // 👇 زرار جوجل
+                  // زرار جوجل
                   OutlinedButton(
                     onPressed: () {},
                     style: OutlinedButton.styleFrom(
@@ -141,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   SizedBox(height: 24.h),
 
-                  // 👇 زرار اللغة (بالأعلام)
+                  // زرار تغيير اللغة
                   Center(
                     child: InkWell(
                       onTap: () {

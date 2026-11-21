@@ -129,7 +129,7 @@ class _HomeTabState extends State<HomeTab> {
 
                 // === التابات (All + باقي الأقسام) ===
                 DefaultTabController(
-                    length: categories.length + 1, // 👈 زودنا 1 عشان زرار All
+                    length: categories.length + 1, //  زودنا 1 عشان زرار All
                     child: TabBar(
                       onTap: (index) {
                         setState(() {
@@ -142,7 +142,7 @@ class _HomeTabState extends State<HomeTab> {
                       tabAlignment: TabAlignment.start,
                       labelPadding: EdgeInsets.symmetric(horizontal: 6.w),
                       tabs: [
-                        // 👇 التاب الأول: All
+                        //  التاب الأول: All
                         Tab(
                           child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
@@ -156,19 +156,18 @@ class _HomeTabState extends State<HomeTab> {
                                 Icon(Icons.all_inclusive, // ♾️ أيقونة All
                                     color: selectedCategoryIndex == 0 ? ColorsManager.blue : Colors.white),
                                 SizedBox(width: 8.w),
-                                Text(
-                                  "All", // ممكن تخليها AppLocalizations.of(context)!.all لو ضفتيها
-                                  style: GoogleFonts.inter(
-                                      color: selectedCategoryIndex == 0 ? ColorsManager.blue : Colors.white,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500
-                                  ),
-                                )
+                            Text(
+                              AppLocalizations.of(context)!.all,
+                              style: GoogleFonts.inter(
+                                  color: selectedCategoryIndex == 0 ? ColorsManager.blue : Colors.white,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500
+                              ),)
                               ],
                             ),
                           ),
                         ),
-                        // 👇 باقي التابات من الليستة
+                        //  باقي التابات من الليستة
                         ...categories.map((category) {
                           // لازم نحسب الـ index الحقيقي (لأننا ضفنا واحد في الأول)
                           int categoryIndex = categories.indexOf(category) + 1;
@@ -211,7 +210,7 @@ class _HomeTabState extends State<HomeTab> {
           Expanded(
             child: StreamBuilder<QuerySnapshot<EventModel>>(
               stream: FirebaseUtils.getEvents(
-                // 👇 لو مختارين 0 ابعت 'all'، غير كدة ابعت الـ id من الليستة (بعد طرح 1)
+                //  لو مختارين 0 ابعت 'all'، غير كدة ابعت الـ id من الليستة (بعد طرح 1)
                   selectedCategoryIndex == 0
                       ? 'all'
                       : categories[selectedCategoryIndex - 1].id
@@ -234,7 +233,73 @@ class _HomeTabState extends State<HomeTab> {
                   padding: EdgeInsets.all(16.r),
                   itemCount: events.length,
                   itemBuilder: (context, index) {
-                    return EventItem(event: events[index]);
+
+                    return Dismissible(
+                      // لازم مفتاح مميز عشان فلاتر يعرف هو بيمسح مين بالظبط
+                      key: Key(events[index].id),
+
+                      // اتجاه السحب (من الشمال لليمين أو العكس)
+                      direction: DismissDirection.startToEnd,
+
+                      // شكل الخلفية لما تسحبي (لون أحمر وسلة مهملات)
+                      background: Container(
+                        margin: EdgeInsets.symmetric(vertical: 8.h), // عشان يبقى قد الكارت
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(16.r),
+                        ),
+                        alignment: Alignment.centerLeft, // الأيقونة تظهر على الشمال
+                        padding: EdgeInsets.only(left: 20.w),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.delete, color: Colors.white, size: 30.sp),
+                            Text(
+                              "Delete",
+                              style: GoogleFonts.inter(
+                                  color: Colors.white,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+
+                      //  هنا اللوجيك اللي بيمسح من الفايربيز فعلياً
+                        onDismissed: (direction) {
+                          print("Deleting ID: ${events[index].id}");
+                          // 1. ناخد نسخة من الايفنت عشان لو حبينا نرجعه
+                          var deletedEvent = events[index];
+
+                          // 2. نمسحه من الفايربيز
+                          FirebaseUtils.getEventCollection()
+                              .doc(deletedEvent.id)
+                              .delete();
+
+                          // 3. نظهر رسالة فيها زرار التراجع
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Event deleted successfully"),
+                              behavior: SnackBarBehavior.floating, // عشان تبقى عايمة وشكلها شيك
+                              action: SnackBarAction(
+                                label: 'Undo',
+                                textColor: Colors.yellow, // لون مميز للزرار
+                                onPressed: () {
+                                  // 4. لو داس Undo، نرجع الايفنت تاني بنفس الـ ID
+                                  FirebaseFirestore.instance
+                                      .collection('Events')
+                                      .doc(deletedEvent.id) // بنستخدم نفس الـ ID القديم
+                                      .set(deletedEvent.toJson()); // بنرفع الداتا تاني
+                                },
+                              ),
+                            ),
+                          );
+                        },
+
+                      // ده العنصر الأصلي بتاعنا
+                      child: EventItem(event: events[index]),
+                    );
                   },
                 );
               },

@@ -30,14 +30,15 @@ class _CustomPasswordFormFieldState extends State<CustomPasswordFormField> {
       obscureText: isObscure,
       keyboardType: widget.keyboardType,
 
-      // 👇 1. الكتابة أسود
-      style: const TextStyle(color: Colors.black),
+
+      style: Theme.of(context).textTheme.bodyMedium,
 
       decoration: InputDecoration(
         labelText: widget.label,
 
-        // 👇 2. الليبل رصاصي
-        labelStyle: const TextStyle(color: Colors.grey),
+
+        labelStyle: Theme.of(context).inputDecorationTheme.labelStyle,
+        hintStyle: Theme.of(context).inputDecorationTheme.hintStyle,
 
         prefixIcon: const Icon(Icons.lock_outline, color: Colors.grey),
         suffixIcon: IconButton(

@@ -11,6 +11,9 @@ import '../../../core/widgets/custom_text_form_feild.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
 import '../../../providers/lang_provider.dart';
 
+// 👇 ضيفي الـ Import ده لو بتستخدمي Firestore عشان تخزني بيانات اليوزر (مهم جداً)
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -34,11 +37,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
         appBar: AppBar(
           title: Text(AppLocalizations.of(context)!.register),
           centerTitle: true,
-          // 👇 تأكدي إن عنوان الأب بار لونه أزرق أو أسود عشان يبان
-          titleTextStyle: TextStyle(color: ColorsManager.black, fontSize: 20, fontWeight: FontWeight.bold),
-          iconTheme: IconThemeData(color: ColorsManager.black), // لون سهم الرجوع
           backgroundColor: Colors.transparent,
           elevation: 0,
+
+          // 👇 1. التعديل هنا: شيلنا اللون الأسود وربطناه بالثيم
+          iconTheme: IconThemeData(
+              color: Theme.of(context).textTheme.titleMedium!.color
+          ),
+          titleTextStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+          ),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -95,8 +104,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     children: [
                       Text(
                         AppLocalizations.of(context)!.already_have_an_account,
-                        // ⚫ لون أسود
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.black),
+
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       TextButton(
                         onPressed: () {
@@ -104,7 +113,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                         child: Text(
                           AppLocalizations.of(context)!.login,
-                          // 🔵 لون أزرق
                           style: TextStyle(
                               color: ColorsManager.blue,
                               fontWeight: FontWeight.bold,
@@ -118,7 +126,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                   SizedBox(height: 24.h),
 
-                  // 👇 زرار اللغة (نفس الكود)
+                  // زرار اللغة
                   Center(
                     child: InkWell(
                       onTap: () {
@@ -186,18 +194,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
         password: passwordController.text.trim(),
       );
 
-      // 👇👇 2. الخطوة الجديدة: تحديث اسم المستخدم في بروفايل الفايربيز
+      // 2. تحديث الاسم في Authentication
       await credential.user?.updateDisplayName(nameController.text.trim());
-
-      // عشان التحديث يسمع فوراً في التطبيق
       await credential.user?.reload();
+
 
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Account Created! 🎉')));
       Navigator.pushReplacementNamed(context, RoutesManager.login);
 
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message ?? "Error")));
     } catch (e) {
-      // ... (باقي الكود زي ما هو)
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Something went wrong")));
     }
   }
 }

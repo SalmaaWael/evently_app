@@ -104,13 +104,18 @@ class ThemeManager {
     ),
     cardColor: ColorsManager.lightblue,
 
-    // 👇 رجعنا الألوان أبيض هنا زي ما كانت
+
     textTheme: TextTheme(
         titleSmall: GoogleFonts.inter(
           fontSize: 14.sp,
           fontWeight: FontWeight.w500,
           color: ColorsManager.white, // أبيض
         ),
+      bodyMedium: GoogleFonts.inter(
+          fontSize: 16.sp, // نفس حجم الدارك
+          fontWeight: FontWeight.w400,
+          color: ColorsManager.black,),
+
         titleMedium: GoogleFonts.inter(
             fontSize: 24.sp,
             fontWeight: FontWeight.w500,
@@ -250,6 +255,14 @@ class ThemeManager {
           fontWeight: FontWeight.w500,
           color: ColorsManager.ofWhite,
         ),
+
+        bodyMedium: GoogleFonts.inter(
+          fontSize: 16.sp,
+          fontWeight: FontWeight.w400,
+          color: ColorsManager.ofWhite,
+        ),
+
+
         labelMedium: GoogleFonts.inter(
           fontSize: 20.sp,
           fontWeight: FontWeight.bold,

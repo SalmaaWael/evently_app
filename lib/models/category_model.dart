@@ -3,9 +3,9 @@ import '../core/assets_manager/assests_manager.dart';
 import '../l10n/app_localizations.dart';
 
 class CategoryModel {
- String id;    // ⚠️ تأكدي إن ده موجود
+ String id;
  String name;
- String image; // ⚠️ وده كمان
+ String image;
  IconData icon;
 
  CategoryModel({
@@ -123,7 +123,7 @@ class CategoryModel {
 
   return [
    CategoryModel(
-       id: 'all',
+       id: 'All',
        name: appLocalizations.all,
        image: '',
        icon: Icons.all_inclusive),

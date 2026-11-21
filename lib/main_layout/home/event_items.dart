@@ -41,7 +41,7 @@ class EventItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
           image: DecorationImage(
             fit: BoxFit.fill,
-            // 👇 هنا الدالة اللي بتختار الصورة بناءً على الـ ID والـ Theme
+            //  هنا الدالة اللي بتختار الصورة بناءً على الـ ID والـ Theme
             image: AssetImage(_getBackgroundImage(event.category, isDark)),
           ),
         ),
@@ -113,8 +113,8 @@ class EventItem extends StatelessWidget {
     );
   }
 
-  // 👇 دي الدالة المهمة جداً
-  // لازم تتأكدي إن الحالات (Cases) هنا مطابقة للـ IDs اللي في CategoryModel
+
+
   String _getBackgroundImage(String categoryId, bool isDark) {
     switch (categoryId) {
       case 'birthday': // ID

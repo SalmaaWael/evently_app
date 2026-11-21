@@ -16,7 +16,7 @@ class Favorite extends StatefulWidget {
 }
 
 class _FavoriteState extends State<Favorite> {
-  // 👇 1. متغير عشان نمسك الكلام اللي في السيرش
+  //  1. متغير عشان نمسك الكلام اللي في السيرش
   String searchText = "";
   late TextEditingController searchController;
 
@@ -25,7 +25,7 @@ class _FavoriteState extends State<Favorite> {
     super.initState();
     searchController = TextEditingController();
 
-    // 👇 2. بنضيف مستمع (Listener) عشان كل حرف يتكتب يحدث الشاشة
+    // 2. بنضيف مستمع (Listener) عشان كل حرف يتكتب يحدث الشاشة
     searchController.addListener(() {
       setState(() {
         searchText = searchController.text;
@@ -46,7 +46,7 @@ class _FavoriteState extends State<Favorite> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            // 👇 3. ربطنا الكنترولر بحقل الكتابة
+            //  3. ربطنا الكنترولر بحقل الكتابة
             CustomTextFormFeild(
               controller: searchController,
               hint: AppLocalizations.of(context)!.search, // تأكدي إن الكلمة دي موجودة في ملفات اللغة
@@ -69,7 +69,7 @@ class _FavoriteState extends State<Favorite> {
                   // بنجيب الليستة الأصلية
                   var eventsList = snapshot.data?.docs.map((doc) => doc.data()).toList() ?? [];
 
-                  // 👇 4. اللوجيك المهم: لو في كلام بحث، فلتر الليستة
+                  //  4. اللوجيك المهم: لو في كلام بحث، فلتر الليستة
                   if (searchText.isNotEmpty) {
                     eventsList = eventsList.where((event) {
                       return event.title.toLowerCase().contains(searchText.toLowerCase());
@@ -78,7 +78,8 @@ class _FavoriteState extends State<Favorite> {
 
                   // لو الليستة فاضية (سواء مفيش مفضلة أصلاً أو مفيش نتايج بحث)
                   if (eventsList.isEmpty) {
-                    return const Center(child: Text("No favorite events found 🤍"));
+                    return const Center(child: Text("No favorite events found 🤍"
+                        ""));
                   }
 
                   return ListView.builder(

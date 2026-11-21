@@ -9,7 +9,7 @@ class EventModel {
   double? lat;
   double? long;
   bool isFavorite;
-  String userId; // 👈 دي الخانة الجديدة اللي ضفناها
+  String userId; //  دي الخانة الجديدة اللي ضفناها
 
   EventModel({
     this.id = '',
@@ -20,7 +20,7 @@ class EventModel {
     this.lat,
     this.long,
     this.isFavorite = false,
-    required this.userId, // 👈 وبقت مطلوبة هنا
+    required this.userId, // وبقت مطلوبة هنا
   });
 
   // تحويل من JSON لـ Object
@@ -34,7 +34,7 @@ class EventModel {
       lat: json['lat'],
       long: json['long'],
       isFavorite: json['isFavorite'],
-      userId: json['userId'] ?? '', // 👈 بنقرأها هنا
+      userId: json['userId'] ?? '', //  بنقرأها هنا
     );
   }
 
@@ -49,7 +49,7 @@ class EventModel {
       "lat": lat,
       "long": long,
       "isFavorite": isFavorite,
-      "userId": userId, // 👈 وبنحفظها هنا
+      "userId": userId, //  وبنحفظها هنا
     };
   }
 }

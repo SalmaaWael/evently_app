@@ -1,6 +1,5 @@
 import 'package:evently_app/models/category_model.dart';
 import 'package:flutter/material.dart';
-import '../colors_manager.dart';
 import 'category_item.dart';
 
 class CustomTabBar extends StatefulWidget {
@@ -11,7 +10,7 @@ class CustomTabBar extends StatefulWidget {
     required this.unselectedBackgroundColor,
     required this.selectedForegroundColor,
     required this.unselectedForegroundColor,
-    required this.onTabChanged, // <--- 1. ضفنا دي
+    required this.onTabChanged,
   });
 
   final List<CategoryModel> categories;
@@ -19,7 +18,7 @@ class CustomTabBar extends StatefulWidget {
   final Color unselectedBackgroundColor;
   final Color selectedForegroundColor;
   final Color unselectedForegroundColor;
-  final Function(int) onTabChanged; // <--- 2. وعرفناها هنا
+  final Function(int) onTabChanged;
 
   @override
   State<CustomTabBar> createState() => _CustomTabBarState();
@@ -38,7 +37,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
         onTap: (index) {
           setState(() {
             isSelectedIndexTab = index;
-            widget.onTabChanged(index); // <--- 3. بنبلغ الصفحة الرئيسية بالاختيار
+            widget.onTabChanged(index);
           });
         },
         isScrollable: true,

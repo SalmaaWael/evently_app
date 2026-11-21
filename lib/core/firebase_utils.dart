@@ -4,7 +4,6 @@ import '../models/event_model.dart';
 
 class FirebaseUtils {
 
-  // دالة الوصول للـ Collection
   static CollectionReference<EventModel> getEventCollection() {
     return FirebaseFirestore.instance.collection('events').withConverter<EventModel>(
       fromFirestore: (snapshot, options) => EventModel.fromJson(snapshot.data()!),
@@ -30,12 +29,12 @@ class FirebaseUtils {
     return getEventCollection().doc(event.id).update(event.toJson());
   }
 
-  // تحديث المفضلة فقط
+
   static Future<void> updateIsFavorite(String eventId, bool isFavorite) {
     return getEventCollection().doc(eventId).update({"isFavorite": isFavorite});
   }
 
-  // 👇👇 التعديلات المهمة هنا 👇👇
+
 
   // جلب الإيفنتات (الخاصة بالمستخدم فقط)
   static Stream<QuerySnapshot<EventModel>> getEvents(String categoryId) {
